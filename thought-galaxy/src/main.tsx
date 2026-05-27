@@ -3,7 +3,9 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
-import {Diary, ToDo, Entry} from "./App.tsx";
+import {Entry} from "./App.tsx";
+import Diary from "./Diary.tsx";
+import ToDo from "./ToDo.tsx";
 
 const router = createBrowserRouter([
   { path: '/', 

@@ -1,9 +1,7 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
-import {Outlet, Link} from "react-router-dom";
+import { useState } from 'react';
+import LotusLogo from './assets/lotuslogo.svg';
+import './App.css';
+import {Outlet, NavLink} from "react-router-dom";
 
 
 export default function App() {
@@ -12,8 +10,9 @@ export default function App() {
   return (
     <div className = "app-container">
       <nav className = "menu">
-        <Link to="/diary">Diary</Link>
-        <Link to="/to-do">To-Do</Link>
+        <img id="logo" src={LotusLogo}/>
+        <NavLink to="/diary" className={({isActive}) => isActive ? "active-tab" : "tab"}>Diary</NavLink>
+        <NavLink to="/to-do" className={({isActive}) => isActive ? "active-tab" : "tab"}>To-Do</NavLink>
       </nav>
       <main>
         <Outlet />
@@ -22,16 +21,8 @@ export default function App() {
   )
 }
 
-
-/*function Menu() {
-    return
-}*/
 export function Entry() {
-  return <h1 className="app-name">Thought Galaxy</h1>;
+  return <h1 className="header">Thought Galaxy</h1>;
 }
-export function Diary() {
-  return <h1>Diary</h1>;
-}
-export function ToDo() {
-  return <h1>To-Do</h1>;
-}
+
+
