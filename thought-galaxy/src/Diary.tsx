@@ -1,3 +1,9 @@
+import {Search} from './App.tsx';
 export default function Diary() {
-  return <h1 className="header">Diary</h1>;
+  return (
+    <div>
+        <h1 className="header">Diary</h1>
+        <Search/>
+    </div>
+  )
 }
