@@ -15,8 +15,7 @@ export default function App() {
             <img id="logo" src={LotusLogo}/>
           </Link>
           <div className="logo-text">
-            <p className="logo-text">Thought</p>
-            <p className="logo-text">Galaxy</p>
+            <p className="logo-text">Thought<br/>Galaxy</p>
           </div>
         </div>
         <div className="space"></div>
@@ -41,9 +40,10 @@ export function Entry() {
   )
 }
 
-export function Search() {
+export function Search({buttonName}:{buttonName: string}) {
     return (
-      <div style={{display: 'flex'}}>
+      <div className="search-complex" style={{display: 'flex'}}>
+        <button className="new-button">{buttonName}</button>
         <input placeholder="Search Entries" className="search-bar"/>
         <button className="search-button">Search</button>
       </div>

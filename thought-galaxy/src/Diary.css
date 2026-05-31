@@ -1,0 +1,41 @@
+.text-box, .title-box, .bottom-bar {
+    border-left: 3px solid transparent;
+    border-right: 3px solid transparent;
+    border-image: linear-gradient(to right, rgb(69, 28, 232), rgb(114, 10, 218)) 1;
+    background-color:rgb(200, 163, 253);
+    position: fixed;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.text-box {
+    font-size: 18.96px;
+    margin-top: 35px;
+    border-bottom: 3px solid transparent;
+    border-top: 1px solid transparent;
+    max-height: 400px;
+}
+.title-box {
+    font-size: 24px;
+    min-width: 587.483px;
+    border-top: 3px solid transparent;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2.5px;
+}
+.entry-box {
+    display: flex;
+    flex-direction: row;
+    margin-left:300px;
+}
+.bottom-bar {
+    border-bottom: 3px solid transparent;
+    border-top: 1px solid transparent;
+    min-width: 592px;
+    min-height: 50px;
+    margin-top: 440px;
+}
+.save-button {
+    position: absolute;
+    top: 15px;
+    left: 480px;
+    border-radius: 500px;
+    background-color:rgb(144, 53, 235);
+}

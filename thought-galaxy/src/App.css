@@ -9,7 +9,8 @@
 }
 
 .main-content {
-  align-items: center;
+  text-align: center;
+  margin-left: 165px;
 }
 
 .menu {
@@ -18,16 +19,22 @@
   height: 100vh;
   width: fit-content;
   border: 3px solid rgb(62, 7, 118);
-  margin-right: 25px;
+  position: fixed;
 
 }
 
-.header {
-  margin-left: 200px;
+.header, .header-1, .header-2 {
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-size: 40px;
   color: rgb(62, 7, 118);
   font-weight:100;
+  
+}
+.header-1 {
+  margin-left: 500px;
+}
+.header-2 {
+  margin-left: 200px;
 }
 .active-tab, .tab:hover {
   font-weight: bold;
@@ -63,17 +70,33 @@
   color:rgb(62, 7, 118);
   border: 2.3px solid rgb(62, 7, 118);
   font-size: 20px;
-  margin-left: 150px;
+  margin-left: 100px;
 }
-.search-button {
-  background-color:rgb(127, 39, 215);
+.new-button {
+  margin-left: 0px;
+  border: 5px solid transparent;
+  border-image: linear-gradient(to right, rgb(168, 52, 240), rgb(251, 202, 43)) 1;
+  color: rgb(251, 202, 43);
+  background-color: rgb(132, 14, 165);
+}
+.search-button, .new-button {
   border-radius: 5%;
   min-width: 80px;
   min-height: 50px;
+  font-size: 1rem;
+}
+.search-button {
   margin-left: 10px;
-  border: 10px 10px 10px 10px;
+  background-color:rgb(127, 39, 215);
 }
 .search-button:hover {
   opacity: 0.8;
   cursor:pointer;
+}
+.new-button:hover {
+  opacity: 0.5;
+  cursor:pointer;
+}
+.search-complex {
+  margin-left: 100px;
 }
