@@ -6,12 +6,16 @@ export default function Diary() {
     const [entryOpen, setEntryOpen] = useState(true); /* eventually default false */
     return (
         <div>
-            {(entryOpen) ? (<DiaryEntryExpanded/>) : (<DiaryEntryCondensed/>)}
+            {(entryOpen) ? (<DiaryEntryExpanded opened={setEntryOpen}/>) : (<DiaryEntryCondensed/>)}
         </div>
   )
 }
 
-function DiaryEntryExpanded() {
+interface diaryToggle {
+    opened: (value: boolean) => void;
+}
+
+function DiaryEntryExpanded({opened}: diaryToggle) {
     return (
         <div>
             <h1 className="header-1">Diary</h1>
@@ -24,7 +28,7 @@ function DiaryEntryExpanded() {
                     placeholder="Start your entry"
                 />
                 <div className="bottom-bar">
-                    <button className="save-button">Save & Close</button>
+                    <button className="save-button" onClick={() => opened(false)}>Save & Close</button>
                 </div>
             </div>
         </div>

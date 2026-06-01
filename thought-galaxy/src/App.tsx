@@ -1,11 +1,10 @@
-import { useState } from 'react';
+/*import { useState } from 'react';*/
 import LotusLogo from './assets/lotuslogo.svg';
 import './App.css';
 import {Outlet, NavLink, Link} from "react-router-dom";
 
 
 export default function App() {
-  /*const [count, setCount] = useState(0) //0 is the count*/
 
   return (
     <div className = "app-container">
