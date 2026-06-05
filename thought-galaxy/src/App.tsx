@@ -2,6 +2,7 @@
 import LotusLogo from './assets/lotuslogo.svg';
 import './App.css';
 import {Outlet, NavLink, Link} from "react-router-dom";
+import type {DiaryToggle} from './Diary.tsx';
 
 
 export default function App() {
@@ -39,10 +40,10 @@ export function Entry() {
   )
 }
 
-export function Search({buttonName}:{buttonName: string}) {
+export function Search({buttonName, setOpened}:{buttonName: string} & DiaryToggle) {
     return (
       <div className="search-complex" style={{display: 'flex'}}>
-        <button className="new-button">{buttonName}</button>
+        <button className="new-button" onClick={() => setOpened(true)}>{buttonName}</button>
         <input placeholder="Search Entries" className="search-bar"/>
         <button className="search-button">Search</button>
       </div>

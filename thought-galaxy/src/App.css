@@ -48,6 +48,7 @@
   margin: 10px;
   text-decoration: none;
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  color: rgb(62, 7, 118);
 }
 #logo {
   max-height: 100%; /* fit container (menu) */

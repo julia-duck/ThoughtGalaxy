@@ -1,34 +1,76 @@
 import {Search} from './App.tsx';
 import {useState} from 'react';
+import {Trash2} from 'lucide-react';
 import './Diary.css';
 import './App.css';
 export default function Diary() {
     const [entryOpen, setEntryOpen] = useState(true); /* eventually default false */
+    const [entriesArr, setEntries] = useState<DiaryEntry[]>([]); //eventually set to saved entries?
     return (
         <div>
-            {(entryOpen) ? (<DiaryEntryExpanded opened={setEntryOpen}/>) : (<DiaryEntryCondensed/>)}
+            {(entryOpen) ? 
+            (<DiaryEntryExpanded setOpened={setEntryOpen} {...entriesArr[0]} entriesArr={entriesArr}/>) :
+            (<DiaryEntryCondensed setOpened={setEntryOpen}/>)}
         </div>
   )
 }
 
-interface diaryToggle {
-    opened: (value: boolean) => void;
+export interface DiaryToggle {
+    setOpened: (value: boolean) => void; //function, (parameters) => return type
 }
 
-function DiaryEntryExpanded({opened}: diaryToggle) {
+export interface DiaryEntry {
+    id: number; //entry ID
+    title: string;
+    body: string;
+    date: string;
+    arrIdx: number;
+}
+
+export interface DiaryProps extends DiaryEntry {
+    entriesArr: DiaryEntry[];
+}
+
+function DiaryEntryExpanded({setOpened, id, title, body, date, arrIdx, entriesArr}: DiaryToggle & DiaryProps) {
+    /* add editor useState here*/
+
+    let hasPrev: boolean, hasNext: boolean, prevIdx: number, nextIdx: number;
+    if (arrIdx == 0) {
+        hasPrev = false;
+        prevIdx = arrIdx;
+    }
+    else {
+        hasPrev = true;
+        prevIdx = arrIdx - 1;
+    }
+    if (arrIdx == entriesArr.length-1) {
+        hasNext = false;
+        nextIdx = arrIdx;
+    }
+    else {
+        hasNext = true;
+        nextIdx = arrIdx + 1;
+    }
+
+
     return (
         <div>
             <h1 className="header-1">Diary</h1>
             <div className="entry-box">
-                <input className="title-box" placeholder="Title"/>
+                <input className="title-box" placeholder="Title" value={title}/>
                 <textarea
                     className="text-box"
                     rows={27}
                     cols={60}
                     placeholder="Start your entry"
-                />
+                >
+                    {body}
+                </textarea>
                 <div className="bottom-bar">
-                    <button className="save-button" onClick={() => opened(false)}>Save & Close</button>
+                    <button className="delete-note">
+                        <Trash2 className="trash-button"/>
+                    </button>
+                    <button className="save-button" onClick={() => setOpened(false)}>Save & Close</button>
                 </div>
             </div>
         </div>
@@ -36,11 +78,11 @@ function DiaryEntryExpanded({opened}: diaryToggle) {
     )
 }
 
-function DiaryEntryCondensed() {
+function DiaryEntryCondensed({setOpened}:DiaryToggle) {
     return (
         <div>
             <h1 className="header-2">Diary</h1>
-            <Search buttonName="New Entry"/>
+            <Search buttonName="New Entry" setOpened={setOpened}/>
         </div>
     )
 }

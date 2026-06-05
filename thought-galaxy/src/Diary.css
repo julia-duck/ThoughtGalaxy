@@ -39,3 +39,18 @@
     border-radius: 500px;
     background-color:rgb(144, 53, 235);
 }
+.save-button:hover {
+    opacity: 0.5;
+    cursor:pointer;
+}
+.trash-button {
+    color:rgb(140, 3, 3);
+    background-color:rgb(254, 178, 178);
+}
+.delete-note {
+    background-color:rgb(254, 178, 178);
+    border: 1px solid rgb(140, 3, 3);
+    position: absolute;
+    top: 7px;
+    left: 15px;
+}
