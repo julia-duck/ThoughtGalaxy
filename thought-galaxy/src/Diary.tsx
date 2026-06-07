@@ -6,17 +6,33 @@ import './App.css';
 export default function Diary() {
     const [entryOpen, setEntryOpen] = useState(true); /* eventually default false */
     const [entriesArr, setEntries] = useState<DiaryEntry[]>([]); //eventually set to saved entries?
+
+    const toggles: DiaryToggle = {
+        setOpened(value) {
+            setEntryOpen(value);
+        },
+        addEntry(value) {
+            setEntries([...entriesArr, value]);
+        }
+    }
+    const bundle: ToggleBundle = {
+        toggles: toggles
+    }
     return (
         <div>
             {(entryOpen) ? 
-            (<DiaryEntryExpanded setOpened={setEntryOpen} {...entriesArr[0]} entriesArr={entriesArr}/>) :
-            (<DiaryEntryCondensed setOpened={setEntryOpen}/>)}
+            (<DiaryEntryExpanded {...toggles} {...entriesArr[0]} entriesArr={entriesArr}/>) :
+            (<DiaryEntryCondensed {...bundle}/>)}
         </div>
   )
 }
 
 export interface DiaryToggle {
     setOpened: (value: boolean) => void; //function, (parameters) => return type
+    addEntry: (value: DiaryEntry) => void;
+}
+export interface ToggleBundle {
+    toggles: DiaryToggle;
 }
 
 export interface DiaryEntry {
@@ -78,11 +94,11 @@ function DiaryEntryExpanded({setOpened, id, title, body, date, arrIdx, entriesAr
     )
 }
 
-function DiaryEntryCondensed({setOpened}:DiaryToggle) {
+function DiaryEntryCondensed({toggles}:ToggleBundle) {
     return (
         <div>
             <h1 className="header-2">Diary</h1>
-            <Search buttonName="New Entry" setOpened={setOpened}/>
+            <Search buttonName="New Entry" {...toggles}/>
         </div>
     )
 }
