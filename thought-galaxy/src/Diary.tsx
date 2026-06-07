@@ -15,14 +15,11 @@ export default function Diary() {
             setEntries([...entriesArr, value]);
         }
     }
-    const bundle: ToggleBundle = {
-        toggles: toggles
-    }
     return (
         <div>
             {(entryOpen) ? 
             (<DiaryEntryExpanded {...toggles} {...entriesArr[0]} entriesArr={entriesArr}/>) :
-            (<DiaryEntryCondensed {...bundle}/>)}
+            (<DiaryEntryCondensed toggles={toggles}/>)}
         </div>
   )
 }
@@ -42,7 +39,7 @@ export interface DiaryEntry {
     date: string;
     arrIdx: number;
 }
-
+//has all props of DiaryEntry, with additional props
 export interface DiaryProps extends DiaryEntry {
     entriesArr: DiaryEntry[];
 }
