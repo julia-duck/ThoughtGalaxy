@@ -1,4 +1,4 @@
-.text-box, .title-box, .bottom-bar {
+.text-box, .title-box, .bottom-bar, .date {
     border-left: 3px solid transparent;
     border-right: 3px solid transparent;
     border-image: linear-gradient(to right, rgb(69, 28, 232), rgb(114, 10, 218)) 1;
@@ -15,7 +15,7 @@
 }
 .title-box {
     font-size: 24px;
-    min-width: 587.483px;
+    min-width: 490.483px;
     border-top: 3px solid transparent;
     border-bottom: 1px solid transparent;
     padding-bottom: 2.5px;
@@ -24,6 +24,10 @@
     display: flex;
     flex-direction: row;
     margin-left:300px;
+}
+.top-bar {
+    display: flex;
+    flex-direction: column;
 }
 .bottom-bar {
     border-bottom: 3px solid transparent;

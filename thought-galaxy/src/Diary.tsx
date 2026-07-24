@@ -4,8 +4,16 @@ import {Trash2} from 'lucide-react';
 import './Diary.css';
 import './App.css';
 export default function Diary() {
-    const [entryOpen, setEntryOpen] = useState(true); /* eventually default false */
-    const [entriesArr, setEntries] = useState<DiaryEntry[]>([]); //eventually set to saved entries?
+    const [entryOpen, setEntryOpen] = useState(false); /* eventually default false */
+    /* testing purposes */
+    let testEntry: DiaryEntry = {
+        id: 1,
+        title: "Test Entry",
+        body: "I am a test entry",
+        date: "6/27/26",
+        arrIdx: 0
+    }
+    const [entriesArr, setEntries] = useState<DiaryEntry[]>([testEntry]); //eventually set to saved entries?
 
     const toggles: DiaryToggle = {
         setOpened(value) {
@@ -39,12 +47,12 @@ export interface DiaryEntry {
     date: string;
     arrIdx: number;
 }
-//has all props of DiaryEntry, with additional props
+//has all props of DiaryEntry, with additional props (properties)
 export interface DiaryProps extends DiaryEntry {
     entriesArr: DiaryEntry[];
 }
 
-function DiaryEntryExpanded({setOpened, id, title, body, date, arrIdx, entriesArr}: DiaryToggle & DiaryProps) {
+function DiaryEntryExpanded({setOpened, addEntry, id, title, body, date, arrIdx, entriesArr}: DiaryToggle & DiaryProps) {
     /* add editor useState here*/
 
     let hasPrev: boolean, hasNext: boolean, prevIdx: number, nextIdx: number;
@@ -65,12 +73,20 @@ function DiaryEntryExpanded({setOpened, id, title, body, date, arrIdx, entriesAr
         nextIdx = arrIdx + 1;
     }
 
+    //Function to add entry
+    let saveEntry = () => {
+        //need the useState that updates based on what user types
+        setOpened(false);
+    }
 
     return (
         <div>
             <h1 className="header-1">Diary</h1>
             <div className="entry-box">
-                <input className="title-box" placeholder="Title" value={title}/>
+                <div className="top-bar">
+                    <input className="title-box" placeholder="Title" value={title}/>
+                    <div className="date">{date}</div>
+                </div>
                 <textarea
                     className="text-box"
                     rows={27}
@@ -81,9 +97,11 @@ function DiaryEntryExpanded({setOpened, id, title, body, date, arrIdx, entriesAr
                 </textarea>
                 <div className="bottom-bar">
                     <button className="delete-note">
+                        {/*figure out how to delete from backend 
+                        and if have to delete from arr too or arr re-fetch from backend*/}
                         <Trash2 className="trash-button"/>
                     </button>
-                    <button className="save-button" onClick={() => setOpened(false)}>Save & Close</button>
+                    <button className="save-button" onClick={saveEntry}>Save & Close</button>
                 </div>
             </div>
         </div>
