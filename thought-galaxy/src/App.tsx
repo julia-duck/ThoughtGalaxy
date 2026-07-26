@@ -2,7 +2,7 @@
 import LotusLogo from './assets/lotuslogo.svg';
 import './App.css';
 import {Outlet, NavLink, Link} from "react-router-dom";
-import type {DiaryToggle} from './Diary.tsx';
+import type {ToggleBundle} from './Diary.tsx';
 
 
 export default function App() {
@@ -40,10 +40,21 @@ export function Entry() {
   )
 }
 
-export function Search({buttonName, setOpened}:{buttonName: string} & DiaryToggle) {
+export function Search({buttonName, entryLen, setOpened, addEntry}:{buttonName: string} & ToggleBundle) {
+    function newEntry() {
+      addEntry({
+        id: 0,
+        title: "",
+        body: "",
+        date: new Date().toLocaleString(),
+        arrIdx: entryLen
+      });
+      setOpened(true); //maybe make function that setopened to true and also pass in variable to expanded entry saying it is new entry
+    }
+
     return (
       <div className="search-complex" style={{display: 'flex'}}>
-        <button className="new-button" onClick={() => setOpened(true)}>{buttonName}</button>
+        <button className="new-button" onClick={newEntry}>{buttonName}</button>
         <input placeholder="Search Entries" className="search-bar"/>
         <button className="search-button">Search</button>
       </div>

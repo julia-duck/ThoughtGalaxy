@@ -1,0 +1,10 @@
+React (before setting up backend):
+- Arrows for next/previous entries
+- Collapsed entry UI
+
+Backend:
+- To generate list of collapsed entry UIs, use .map to create array of HTML elements
+So basically we have an HTML array where each element is the UI of one collapsed entry
+And we display them all equally spaced one after another
+- Figure out how to pass into DiaryExpanded function if it's new entry or not
+- Make delete note button work

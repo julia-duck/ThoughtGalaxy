@@ -18,7 +18,15 @@
     min-width: 490.483px;
     border-top: 3px solid transparent;
     border-bottom: 1px solid transparent;
-    padding-bottom: 2.5px;
+    padding-bottom: 4px;
+}
+.date {
+    font-size: 24px;
+    min-width: 89.3px;
+    border-top: 3px solid transparent;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 5px;
+    margin-left: 499.9px;
 }
 .entry-box {
     display: flex;
@@ -32,7 +40,7 @@
 .bottom-bar {
     border-bottom: 3px solid transparent;
     border-top: 1px solid transparent;
-    min-width: 592px;
+    min-width: 588.5px;
     min-height: 50px;
     margin-top: 440px;
 }

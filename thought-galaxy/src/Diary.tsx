@@ -1,8 +1,9 @@
 import {Search} from './App.tsx';
-import {useState} from 'react';
+import {useState, useRef} from 'react';
 import {Trash2} from 'lucide-react';
 import './Diary.css';
 import './App.css';
+//re-renders if something changes (like useState variable)
 export default function Diary() {
     const [entryOpen, setEntryOpen] = useState(false); /* eventually default false */
     /* testing purposes */
@@ -21,13 +22,22 @@ export default function Diary() {
         },
         addEntry(value) {
             setEntries([...entriesArr, value]);
+        },
+        changeEntry(key, newEnt) {
+            //build new array where object that matches key is replaced, rest is kept
+            setEntries(entriesArr.map((entry) => {
+                if (entry.id == key) {
+                    return newEnt;
+                }
+                return entry;
+            }));
         }
     }
     return (
         <div>
             {(entryOpen) ? 
             (<DiaryEntryExpanded {...toggles} {...entriesArr[0]} entriesArr={entriesArr}/>) :
-            (<DiaryEntryCondensed toggles={toggles}/>)}
+            (<DiaryEntryCondensed {...toggles} entryLen = {entriesArr.length}/>)}
         </div>
   )
 }
@@ -35,9 +45,10 @@ export default function Diary() {
 export interface DiaryToggle {
     setOpened: (value: boolean) => void; //function, (parameters) => return type
     addEntry: (value: DiaryEntry) => void;
+    changeEntry: (key: number, newEnt: DiaryEntry) => void;
 }
-export interface ToggleBundle {
-    toggles: DiaryToggle;
+export interface ToggleBundle extends DiaryToggle {
+    entryLen: number;
 }
 
 export interface DiaryEntry {
@@ -52,8 +63,10 @@ export interface DiaryProps extends DiaryEntry {
     entriesArr: DiaryEntry[];
 }
 
-function DiaryEntryExpanded({setOpened, addEntry, id, title, body, date, arrIdx, entriesArr}: DiaryToggle & DiaryProps) {
-    /* add editor useState here*/
+function DiaryEntryExpanded({setOpened, addEntry, changeEntry, id, title, body, date, arrIdx, entriesArr}: DiaryToggle & DiaryProps) {
+    /* can rassign .current value but not the entire variable pointer */
+    const titleValue = useRef(null);
+    const bodyText = useRef(null);
 
     let hasPrev: boolean, hasNext: boolean, prevIdx: number, nextIdx: number;
     if (arrIdx == 0) {
@@ -76,6 +89,8 @@ function DiaryEntryExpanded({setOpened, addEntry, id, title, body, date, arrIdx,
     //Function to add entry
     let saveEntry = () => {
         //need the useState that updates based on what user types
+        //add or change entry
+        //read titleValue.current.value and save
         setOpened(false);
     }
 
@@ -84,7 +99,8 @@ function DiaryEntryExpanded({setOpened, addEntry, id, title, body, date, arrIdx,
             <h1 className="header-1">Diary</h1>
             <div className="entry-box">
                 <div className="top-bar">
-                    <input className="title-box" placeholder="Title" value={title}/>
+                    {/*titleValue set to reference the input element, can use .current.value to check text value of element*/}
+                    <input className="title-box" placeholder="Title" defaultValue={title} ref={titleValue}/>
                     <div className="date">{date}</div>
                 </div>
                 <textarea
@@ -92,6 +108,7 @@ function DiaryEntryExpanded({setOpened, addEntry, id, title, body, date, arrIdx,
                     rows={27}
                     cols={60}
                     placeholder="Start your entry"
+                    ref={bodyText}
                 >
                     {body}
                 </textarea>
@@ -109,7 +126,7 @@ function DiaryEntryExpanded({setOpened, addEntry, id, title, body, date, arrIdx,
     )
 }
 
-function DiaryEntryCondensed({toggles}:ToggleBundle) {
+function DiaryEntryCondensed(toggles:ToggleBundle) {
     return (
         <div>
             <h1 className="header-2">Diary</h1>
