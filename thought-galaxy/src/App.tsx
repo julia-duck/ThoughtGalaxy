@@ -40,16 +40,21 @@ export function Entry() {
   )
 }
 
-export function Search({buttonName, entryLen, setOpened, addEntry}:{buttonName: string} & ToggleBundle) {
+export function Search({buttonName, entryLen, setOpened, addEntry, setIdx}:{buttonName: string} & ToggleBundle) {
     function newEntry() {
       addEntry({
-        id: 0,
+        id: entryLen,
         title: "",
         body: "",
-        date: new Date().toLocaleString(),
+        date: new Date().toLocaleString('en-US', {
+          month: 'numeric',
+          day: 'numeric',
+          year: '2-digit',
+        }),
         arrIdx: entryLen
       });
       setOpened(true); //maybe make function that setopened to true and also pass in variable to expanded entry saying it is new entry
+      setIdx(entryLen);
     }
 
     return (

@@ -68,8 +68,8 @@
   min-width: 500px;
   min-height: 50px;
   background-color:rgb(178, 145, 254);
-  color:rgb(62, 7, 118);
-  border: 2.3px solid rgb(62, 7, 118);
+  color:var(--dark-2);
+  border: 2.3px solid var(--dark-2);
   font-size: 20px;
   margin-left: 100px;
 }

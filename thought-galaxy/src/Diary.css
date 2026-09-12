@@ -44,14 +44,21 @@
     min-height: 50px;
     margin-top: 440px;
 }
-.save-button {
+.save-button, .discard-changes {
     position: absolute;
+    border-radius: 500px;
+}
+.save-button {
+    background-color:var(--dark-1);
     top: 15px;
     left: 480px;
-    border-radius: 500px;
-    background-color:rgb(144, 53, 235);
 }
-.save-button:hover {
+.discard-changes {
+    top: 15px;
+    left: 350px;
+    background-color:var(--theme-color);
+}
+.save-button:hover, .discard-changes:hover {
     opacity: 0.5;
     cursor:pointer;
 }
@@ -65,4 +72,72 @@
     position: absolute;
     top: 7px;
     left: 15px;
+}
+.entry-box {
+  max-width: 500px;
+  min-height: 80px;
+  background-color:rgb(178, 145, 254);
+  color:var(--dark-2);
+  border: 2.3px solid var(--dark-2);
+  font-size: 20px;
+  margin: 10px 10px 10px 300px;
+  display: flex;
+  flex-direction: column;
+}
+.c-date {
+    text-align: left;
+    padding-left: 10px;
+    margin-top: 5px;
+}
+.c-buttons {
+    display: flex;
+    flex-direction: column;
+    max-width: 50px;
+    justify-content: right;
+}
+.c-middle {
+    display: flex;
+    flex-direction: row;
+    margin-right: 5%;
+}
+.c-title {
+    min-width: 80%;
+    margin-left: 10%;
+}
+.edit-entry {
+    margin-bottom: 5px;
+    background-color: var(--dark1);
+    border: 1px solid var(--dark2);
+}
+.edit-entry:hover, .delete-entry:hover {
+    cursor: pointer;
+}
+.delete-entry {
+    background-color: var(--dark1);
+    border: 1px solid var(--dark2);
+}
+.entry-complex {
+    display: flex;
+    flex-direction: row;
+}
+.right-button, .left-button {
+    min-width: 50px;
+    max-height: 80px;
+    min-height: 80px;
+    background-color: var(--dark-2);
+    color: var(--theme-color);
+    border: 1px solid var(--dark2);
+    border-radius: 10px;
+    position: fixed;
+    margin-top: 200px;
+}
+.left-button {
+    margin-left: 200px;
+}
+.right-button {
+    margin-left: 950px;
+}
+.left-button:hover, .right-button:hover {
+    cursor: pointer;
+    opacity: 0.5;
 }

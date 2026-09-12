@@ -1,5 +1,7 @@
 :root {
   --theme-color: rgb(196, 147, 236);
+  --dark-1: rgb(144, 53, 235);
+  --dark-2: rgb(62, 7, 118);
   background-color: var(--theme-color);
   margin: 0px;
   padding: 0px;
