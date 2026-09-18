@@ -1,4 +1,4 @@
-/*import { useState } from 'react';*/
+import { useState } from 'react';
 import LotusLogo from './assets/lotuslogo.svg';
 import './App.css';
 import {Outlet, NavLink, Link} from "react-router-dom";
@@ -34,16 +34,21 @@ export function Entry() {
     <div>
       <h1 className="header">Thought Galaxy</h1>
       <div className="space"></div>
-      <p>Welcome to Thought Galaxy, a space to save memories, express yourself, and organize your thoughts and tasks.</p>
+      <p className="intro">Welcome to <b>Thought Galaxy</b>, a space to save memories, express yourself, and organize your thoughts and tasks.</p>
     </div>
 
   )
 }
 
 export function Search({buttonName, entryLen, setOpened, addEntry, setIdx}:{buttonName: string} & ToggleBundle) {
-    function newEntry() {
+  let [search, setSearch] = useState("");  
+  function searchEntries() {
+    {/*placeholder*/}
+    alert(search);
+  }
+  function newEntry() {
       addEntry({
-        id: entryLen,
+        id: Date.now(), 
         title: "",
         body: "",
         date: new Date().toLocaleString('en-US', {
@@ -57,11 +62,11 @@ export function Search({buttonName, entryLen, setOpened, addEntry, setIdx}:{butt
       setIdx(entryLen);
     }
 
-    return (
+    return ( 
       <div className="search-complex" style={{display: 'flex'}}>
         <button className="new-button" onClick={newEntry}>{buttonName}</button>
-        <input placeholder="Search Entries" className="search-bar"/>
-        <button className="search-button">Search</button>
+        <input placeholder="Search Entries" className="search-bar" onChange={(e) => setSearch(e.target.value)}/>
+        <button className="search-button" onClick={searchEntries}>Search</button>
       </div>
     )
 }

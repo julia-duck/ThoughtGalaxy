@@ -28,7 +28,7 @@
     padding-bottom: 5px;
     margin-left: 499.9px;
 }
-.entry-box {
+.entry-box, .entry-box-condensed {
     display: flex;
     flex-direction: row;
     margin-left:300px;
@@ -58,7 +58,7 @@
     left: 350px;
     background-color:var(--theme-color);
 }
-.save-button:hover, .discard-changes:hover {
+.save-button:hover, .discard-changes:hover, .trash-button:hover {
     opacity: 0.5;
     cursor:pointer;
 }
@@ -73,7 +73,7 @@
     top: 7px;
     left: 15px;
 }
-.entry-box {
+.entry-box-condensed {
   max-width: 500px;
   min-height: 80px;
   background-color:rgb(178, 145, 254);
@@ -140,4 +140,8 @@
 .left-button:hover, .right-button:hover {
     cursor: pointer;
     opacity: 0.5;
+}
+.entry-box, .entry-box-condensed:hover {
+    box-shadow: 0px 20px 10px rgba(0, 0, 0, 0.15);
+    background-color:rgb(188, 159, 252);
 }

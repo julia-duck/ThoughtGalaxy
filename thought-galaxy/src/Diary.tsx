@@ -15,15 +15,7 @@ const DiaryIdx = createContext<DiaryIdxContextType | null>(null);
 export default function Diary() {
     const [entryOpen, setEntryOpen] = useState(false); /* eventually default false */
     const [diaryIdx, setDiaryIdx] = useState(0);
-    /* testing purposes */
-    let testEntry: DiaryEntry = {
-        id: 0,
-        title: "Test Entry",
-        body: "I am a test entry",
-        date: "6/27/26",
-        arrIdx: 0
-    }
-    const [entriesArr, setEntries] = useState<DiaryEntry[]>([testEntry]); //eventually set to saved entries?
+    const [entriesArr, setEntries] = useState<DiaryEntry[]>([]); //eventually set to saved entries?
 
     const toggles: DiaryToggle = {
         setOpened(value) {
@@ -40,12 +32,15 @@ export default function Diary() {
                 }
                 return entry;
             }));
+        },
+        deleteEntry(key) {
+            setEntries(entriesArr.filter((entry) => entry.id != key));
         }
     }
     return (
         <DiaryIdx.Provider value={{diaryIdx, setDiaryIdx}}>
             {(entryOpen) ? 
-            (<DiaryEntryExpanded {...toggles} {...entriesArr[diaryIdx]} entriesArr={entriesArr}/>) :
+            (<DiaryEntryExpanded key={diaryIdx} {...toggles} {...entriesArr[diaryIdx]} entriesArr={entriesArr}/>) :
             (<DiaryEntryCondensed {...toggles} {...entriesArr[diaryIdx]} entryLen = {entriesArr.length} entriesArr={entriesArr} setIdx={setDiaryIdx}/>)}
         </DiaryIdx.Provider>
   )
@@ -55,6 +50,7 @@ export interface DiaryToggle {
     setOpened: (value: boolean) => void; //function, (parameters) => return type
     addEntry: (value: DiaryEntry) => void;
     changeEntry: (key: number, newEnt: DiaryEntry) => void;
+    deleteEntry: (key: number) => void;
 }
 export interface ToggleBundle extends DiaryToggle {
     entryLen: number;
@@ -73,7 +69,7 @@ export interface DiaryProps extends DiaryEntry {
     entriesArr: DiaryEntry[];
 }
 
-function DiaryEntryExpanded({setOpened, changeEntry, id, title, body, date, arrIdx, entriesArr}: DiaryToggle & DiaryProps) {
+function DiaryEntryExpanded({setOpened, changeEntry, deleteEntry, id, title, body, date, arrIdx, entriesArr}: DiaryToggle & DiaryProps) {
     /* can rassign .current value but not the entire variable pointer */
     const titleValue = useRef(null);
     const bodyText = useRef(null);
@@ -112,11 +108,18 @@ function DiaryEntryExpanded({setOpened, changeEntry, id, title, body, date, arrI
         //need the useState that updates based on what user types
         //change entry
         //read titleValue.current.value and save
-        changeEntry(id, thisEntry);
-        setOpened(false);
+        (entryTitle == "") ? alert("Please title your entry") : (
+            changeEntry(id, thisEntry),
+            setOpened(false)
+        );
     }
 
     let discardChanges = () => {
+        setOpened(false);
+    }
+
+    let deleteEnt = () => {
+        deleteEntry(id);
         setOpened(false);
     }
 
@@ -138,7 +141,7 @@ function DiaryEntryExpanded({setOpened, changeEntry, id, title, body, date, arrI
                         <div className="date">{date}</div>
                     </div>
                     <textarea
-                        className="text-box"
+                        className="text-box" 
                         rows={27}
                         cols={60}
                         placeholder="Start your entry"
@@ -146,15 +149,16 @@ function DiaryEntryExpanded({setOpened, changeEntry, id, title, body, date, arrI
                         defaultValue={body}
                         key={id}
                         onChange={(e) => setEntryBody(e.target.value)}
-                    />
-                    <div className="bottom-bar">
-                        <button className="delete-note">
+                    /> 
+                    <div className="bottom-bar"> 
+                        <button className="delete-note" onClick={deleteEnt}>
                             {/*figure out how to delete from backend 
                             and if have to delete from arr too or arr re-fetch from backend*/}
                             <Trash2 className="trash-button"/>
                         </button>
                         <button className="save-button" onClick={saveEntry}>Save & Close</button>
-                        <button className="discard-changes" onClick={discardChanges}>Discard Changes</button>
+                        {(thisEntry.title != title || thisEntry.body != body) &&
+                        <button className="discard-changes" onClick={discardChanges}>Discard Changes</button>}
                     </div>
                 </div>
                 {(hasNext) && <button className="right-button"
@@ -169,9 +173,9 @@ function DiaryEntryCondensed(props:ToggleBundle & DiaryProps) {
     return (
         <div>
             <h1 className="header-2">Diary</h1>
-            <Search buttonName="New Entry" entryLen={props.entryLen} setOpened={props.setOpened} addEntry= {props.addEntry} changeEntry={props.changeEntry} setIdx={props.setIdx}/>
+            <Search buttonName="New Entry" entryLen={props.entryLen} setOpened={props.setOpened} addEntry= {props.addEntry} changeEntry={props.changeEntry} setIdx={props.setIdx} deleteEntry={props.deleteEntry}/>
             {props.entriesArr.map((entry: DiaryEntry) => (
-                <CondensedEntry key={entry.id} {...entry} setOpened={props.setOpened} changeEntry={props.changeEntry} addEntry={props.addEntry} entryLen={props.entryLen} setIdx={props.setIdx}/>
+                <CondensedEntry key={entry.id} {...entry} setOpened={props.setOpened} changeEntry={props.changeEntry} addEntry={props.addEntry} entryLen={props.entryLen} setIdx={props.setIdx} deleteEntry={props.deleteEntry}/>
             ))}
         </div>
     )
@@ -185,13 +189,13 @@ function CondensedEntry(props: ToggleBundle & DiaryEntry) {
     }
     return (
         <div>
-            <div className="entry-box">
+            <div className="entry-box-condensed">
                 <div className="c-date">{props.date}</div>
                 <div className="c-middle">
                     <div className="c-title">{props.title}</div>
                     <div className="c-buttons"> 
                         <button className="edit-entry" onClick={editEntry}><u>Edit</u></button>
-                        <button className="delete-entry"><u>Delete</u></button>
+                        <button className="delete-entry" onClick={() => props.deleteEntry(props.id)}><u>Delete</u></button>
                     </div> 
                 </div>
             </div>
